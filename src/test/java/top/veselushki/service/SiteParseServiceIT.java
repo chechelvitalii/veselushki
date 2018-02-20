@@ -17,29 +17,29 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class VeselushkiParseServiceIT {
+public class SiteParseServiceIT {
 
-    private VeselushkiParseService sut = new VeselushkiParseService("http://veselushki.top/page/", 1, 1);
+    private SiteParseService sut = new SiteParseService("http://veselushki.top/page/", 1, 1);
     private static Connection connection = mock(Connection.class);
 
     @Test
-    public void shouldReturnLastTopicsName() throws IOException {
+    public void shouldReturnLastTopicLinks() throws IOException {
         //GIVEN
         mockJsoupConnection();
         String firstPageHtml = IOUtils.toString(getClass().getResourceAsStream("/veselushkiFirstPage.html"), UTF_8);
         Document firstPage = Jsoup.parse(firstPageHtml);
         when(connection.get()).thenReturn(firstPage);
         //WHEN
-        List<String> lastTopicsName = sut.getLastTopicsName();
+        List<String> lastTopicsName = sut.getLastTopicLinks();
         //THEN
         assertThat(lastTopicsName, hasSize(6));
         assertThat(lastTopicsName,
-                hasItems("vot-kak-v-deystvitelnosti-vyiglyadyat-snezhinki-oni-hotyat-nam-chto-to-skazat",
-                        "kak-uhazhivat-za-zhenskim-schastem-chtobyi-ono-regulyarno-pyishno-tsvelo",
-                        "pochemu-vazhno-vsegda-ostavlyat-monetu-v-morozilke-pered-tem-kak-vyi-uhodite-iz-domu-vyi-dolzhnyi-eto-znat",
-                        "vot-tak-seychas-vyiglyadit-devochka-kotoruyu-roditeli-v-2-goda-sdelali-modelyu",
-                        "vdohnul-v-mototsikl-1960-goda-novuyu-zhizn-budto-tolko-s-konveyera-soshyol",
-                        "babushka-na-odesskom-plyazhe-etot-nomer-prosto-vzorval-zal"));
+                hasItems("http://veselushki.top/vot-kak-v-deystvitelnosti-vyiglyadyat-snezhinki-oni-hotyat-nam-chto-to-skazat/",
+                        "http://veselushki.top/kak-uhazhivat-za-zhenskim-schastem-chtobyi-ono-regulyarno-pyishno-tsvelo/",
+                        "http://veselushki.top/pochemu-vazhno-vsegda-ostavlyat-monetu-v-morozilke-pered-tem-kak-vyi-uhodite-iz-domu-vyi-dolzhnyi-eto-znat/",
+                        "http://veselushki.top/vot-tak-seychas-vyiglyadit-devochka-kotoruyu-roditeli-v-2-goda-sdelali-modelyu/",
+                        "http://veselushki.top/vdohnul-v-mototsikl-1960-goda-novuyu-zhizn-budto-tolko-s-konveyera-soshyol/",
+                        "http://veselushki.top/babushka-na-odesskom-plyazhe-etot-nomer-prosto-vzorval-zal/"));
     }
 
     private static void mockJsoupConnection() {
