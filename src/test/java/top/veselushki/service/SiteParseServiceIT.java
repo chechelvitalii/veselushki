@@ -26,7 +26,7 @@ public class SiteParseServiceIT {
     public void shouldReturnLastTopicLinks() throws IOException {
         //GIVEN
         mockJsoupConnection();
-        String firstPageHtml = IOUtils.toString(getClass().getResourceAsStream("/veselushkiFirstPage.html"), UTF_8);
+        String firstPageHtml = IOUtils.toString(getClass().getResourceAsStream("/siteFirstPage.html"), UTF_8);
         Document firstPage = Jsoup.parse(firstPageHtml);
         when(connection.get()).thenReturn(firstPage);
         //WHEN
@@ -34,12 +34,12 @@ public class SiteParseServiceIT {
         //THEN
         assertThat(lastTopicsName, hasSize(6));
         assertThat(lastTopicsName,
-                hasItems("http://veselushki.top/vot-kak-v-deystvitelnosti-vyiglyadyat-snezhinki-oni-hotyat-nam-chto-to-skazat/",
-                        "http://veselushki.top/kak-uhazhivat-za-zhenskim-schastem-chtobyi-ono-regulyarno-pyishno-tsvelo/",
-                        "http://veselushki.top/pochemu-vazhno-vsegda-ostavlyat-monetu-v-morozilke-pered-tem-kak-vyi-uhodite-iz-domu-vyi-dolzhnyi-eto-znat/",
-                        "http://veselushki.top/vot-tak-seychas-vyiglyadit-devochka-kotoruyu-roditeli-v-2-goda-sdelali-modelyu/",
-                        "http://veselushki.top/vdohnul-v-mototsikl-1960-goda-novuyu-zhizn-budto-tolko-s-konveyera-soshyol/",
-                        "http://veselushki.top/babushka-na-odesskom-plyazhe-etot-nomer-prosto-vzorval-zal/"));
+                hasItems("http://veselushki.top/samyie-dorogostoyashhie-krutyie-i-umnyie-avtomobili-2017-goda/",
+                        "http://veselushki.top/10-bezumnyih-foto-lyudey-kotoryim-sovershenno-plevat-na-obshhestvennoe-mnenie/",
+                        "http://veselushki.top/yaponskiy-hudozhnik-risuet-chuvstva-kotoryie-hot-raz-ispyityival-kazhdyiy-no-ne-mog-opisat-slovami/",
+                        "http://veselushki.top/skazochnyie-makro-foto-hudozhnika-vyacheslava-mishhenko/",
+                        "http://veselushki.top/esli-vyi-uvideli-monetu-na-dveri-avto-deystvuyte-nemedlenno/",
+                        "http://veselushki.top/mandala-udachi/"));
     }
 
     private static void mockJsoupConnection() {
