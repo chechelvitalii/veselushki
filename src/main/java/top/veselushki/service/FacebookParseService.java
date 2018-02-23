@@ -1,18 +1,19 @@
 package top.veselushki.service;
 
-import com.google.common.net.UrlEscapers;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import top.veselushki.dto.FacebookPost;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
-import top.veselushki.dto.FacebookPost;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -29,15 +30,16 @@ public class FacebookParseService {
         List<String> escapedTopicLinks = escapeLinks(topicLinks);
         Elements allLinksOnFacebookPage = getAllLinks();
         for (String escapedTopicLink : escapedTopicLinks) {
-            Element elementWithLinkToSite = allLinksOnFacebookPage.stream()
+            Optional<Element> elementWithLinkToSite = allLinksOnFacebookPage.stream()
                     .filter(a -> a.attr("href").contains(escapedTopicLink))
                     .filter(element -> element instanceof Element)
                     .map(Element.class::cast)
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("Element with link ti site wasn't found for page:" + escapedTopicLink));
-
-            String label = getLabel(elementWithLinkToSite);
-            publishedPosts.add(new FacebookPost(escapedTopicLink, label));
+                    .findFirst();
+            if (elementWithLinkToSite.isPresent()) {
+                String label = getLabel(elementWithLinkToSite.get());
+                String decodedTopicLink = URLDecoder.decode(escapedTopicLink, StandardCharsets.UTF_8.toString());
+                publishedPosts.add(new FacebookPost(decodedTopicLink, label));
+            }
         }
 
         return publishedPosts;
@@ -45,7 +47,7 @@ public class FacebookParseService {
 
     private List<String> escapeLinks(List<String> links) {
         return links.stream()
-                .map(UrlEscapers.urlPathSegmentEscaper()::escape)
+                .map(URLEncoder::encode)
                 .collect(toList());
     }
 

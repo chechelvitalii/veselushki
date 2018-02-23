@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 public class FacebookPost {
-    private String pageName;
+    private String topicLink;
     private String label;
 }
