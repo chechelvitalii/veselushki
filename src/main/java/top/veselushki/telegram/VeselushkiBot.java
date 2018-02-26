@@ -41,4 +41,5 @@ public class VeselushkiBot extends TelegramWebhookBot {
         log.warn("EVENT: getBotPath not handled !!!");
         return null;
     }
+
 }

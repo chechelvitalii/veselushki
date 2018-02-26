@@ -37,8 +37,7 @@ public class FacebookParseService {
                     .findFirst();
             if (elementWithLinkToSite.isPresent()) {
                 String label = getLabel(elementWithLinkToSite.get());
-                String decodedTopicLink = URLDecoder.decode(escapedTopicLink, StandardCharsets.UTF_8.toString());
-                publishedPosts.add(new FacebookPost(decodedTopicLink, label));
+                publishedPosts.add(new FacebookPost(escapedTopicLink, label));
             }
         }
 
