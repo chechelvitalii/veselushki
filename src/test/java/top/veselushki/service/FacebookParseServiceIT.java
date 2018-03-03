@@ -6,7 +6,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
-import top.veselushki.dto.FacebookPost;
+import top.veselushki.model.FacebookPost;
 
 import java.util.List;
 
