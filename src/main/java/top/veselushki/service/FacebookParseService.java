@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import top.veselushki.model.FacebookPost;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class FacebookParseService {
         this.facebookUrl = facebookUrl;
     }
 
-    public List<FacebookPost> getPublishedPosts(List<String> topicLinks) throws IOException {
+    public List<FacebookPost> getPublishedPosts(List<String> topicLinks) {
         List<FacebookPost> publishedPosts = new ArrayList<>();
         List<String> escapedTopicLinks = escapeLinks(topicLinks);
         Elements allLinksOnFacebookPage = getAllLinks();
@@ -35,7 +36,8 @@ public class FacebookParseService {
                     .findFirst();
             if (elementWithLinkToSite.isPresent()) {
                 String label = getLabel(elementWithLinkToSite.get());
-                publishedPosts.add(new FacebookPost(escapedTopicLink, label));
+                String decodedTopicLink = URLDecoder.decode(escapedTopicLink);
+                publishedPosts.add(new FacebookPost(decodedTopicLink, label));
             }
         }
 
@@ -48,8 +50,13 @@ public class FacebookParseService {
                 .collect(toList());
     }
 
-    private Elements getAllLinks() throws IOException {
-        Element page = Jsoup.connect(facebookUrl).get().body();
+    private Elements getAllLinks() {
+        Element page = null;
+        try {
+            page = Jsoup.connect(facebookUrl).get().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return page.select("a");
     }
 

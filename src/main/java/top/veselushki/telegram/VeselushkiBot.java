@@ -4,8 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.api.methods.BotApiMethod;
+import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 @Slf4j
 @Component
@@ -42,4 +45,11 @@ public class VeselushkiBot extends TelegramWebhookBot {
         return null;
     }
 
+    public Message safetySendMessage(SendMessage sendMessage) {
+        try {
+            return sendMessage(sendMessage);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

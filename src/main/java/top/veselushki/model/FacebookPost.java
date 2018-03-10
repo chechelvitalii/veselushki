@@ -14,8 +14,9 @@ import static top.veselushki.model.FacebookPost.PostStatus.NEW;
 @Entity
 @Table(name = "facebook_post")
 public class FacebookPost {
-    public FacebookPost(String topicLink) {
+    public FacebookPost(String topicLink, String label) {
         this.topicLink = topicLink;
+        this.label = label;
     }
 
     public enum PostStatus {NEW, SENT}
@@ -29,5 +30,5 @@ public class FacebookPost {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status", length = 4, nullable = false)
-    private PostStatus postStatus = NEW;
+    private PostStatus status = NEW;
 }

@@ -41,10 +41,10 @@ public class FacebookParseServiceIT {
         assertThat(publishedPosts, hasSize(2));
         FacebookPost facebookPost1 = publishedPosts.get(0);
         assertThat(facebookPost1.getLabel(), is("Это очень важно!!!"));
-        assertThat(facebookPost1.getTopicLink(), is("http%3A%2F%2Fveselushki.top%2Fesli-vyi-uvideli-monetu-na-dveri-avto-deystvuyte-nemedlenno%2F"));
+        assertThat(facebookPost1.getTopicLink(), is("http://veselushki.top/esli-vyi-uvideli-monetu-na-dveri-avto-deystvuyte-nemedlenno/"));
         FacebookPost facebookPost2 = publishedPosts.get(1);
         assertThat(facebookPost2.getLabel(), is("Прекрасная мандала удичи"));
-        assertThat(facebookPost2.getTopicLink(), is("http%3A%2F%2Fveselushki.top%2Fmandala-udachi%2F"));
+        assertThat(facebookPost2.getTopicLink(), is("http://veselushki.top/mandala-udachi/"));
     }
 
     private static void mockJsoupConnection() {

@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import static org.apache.commons.lang3.CharEncoding.UTF_8;
 import static org.hamcrest.CoreMatchers.hasItems;
@@ -17,7 +18,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SiteParseServiceIT {
+public class SiteParseServiceTest {
 
     private SiteParseService sut = new SiteParseService("http://veselushki.top/page/", 1, 1);
     private static Connection connection = mock(Connection.class);
