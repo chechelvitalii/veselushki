@@ -1,24 +1,33 @@
 package top.veselushki.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import static top.veselushki.model.FacebookPost.PostStatus.NEW;
 
 @Setter
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "facebook_post")
 public class FacebookPost {
+    public FacebookPost(String topicLink) {
+        this.topicLink = topicLink;
+    }
+
+    public enum PostStatus {NEW, SENT}
 
     @Id
-    @Column(name = "topicLink")
+    @Column(name = "topicLink", nullable = false)
     private String topicLink;
+
     @Column(name = "label")
     private String label;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status", length = 4, nullable = false)
+    private PostStatus postStatus = NEW;
 }
