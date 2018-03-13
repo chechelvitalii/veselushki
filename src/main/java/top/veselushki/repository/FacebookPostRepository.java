@@ -16,6 +16,6 @@ public interface FacebookPostRepository extends JpaRepository<FacebookPost, Stri
     List<FacebookPost> findNotSentPosts();
 
     @Modifying
-    @Query("UPDATE FacebookPost SET status = 'SENT' WHERE topicLink in :topicLinks")
+    @Query("UPDATE FacebookPost SET status = 'SENT', sentDateTime=now() WHERE topicLink in :topicLinks")
     int updateToSent(@Param("topicLinks") List<String> topicLinks);
 }

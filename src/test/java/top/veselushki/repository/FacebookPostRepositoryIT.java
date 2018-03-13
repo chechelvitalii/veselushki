@@ -16,6 +16,8 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static top.veselushki.model.FacebookPost.PostStatus.NEW;
 import static top.veselushki.model.FacebookPost.PostStatus.SENT;
 
@@ -47,6 +49,8 @@ public class FacebookPostRepositoryIT {
         assertThat(notSentPost.getTopicLink(), is("newPostLink"));
         assertThat(notSentPost.getLabel(), is("newPostLabel"));
         assertThat(notSentPost.getStatus(), is(FacebookPost.PostStatus.NEW));
+        assertNotNull(notSentPost.getCreatedDateTime());
+        assertNull(notSentPost.getSentDateTime());
     }
 
     @Test
@@ -60,5 +64,6 @@ public class FacebookPostRepositoryIT {
         entityManager.refresh(facebookPost);
         //THEN
         assertThat(facebookPost.getStatus(), is(SENT));
+        assertNotNull(facebookPost.getSentDateTime());
     }
 }
